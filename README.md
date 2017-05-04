@@ -146,7 +146,7 @@ curl -H "Content-Type: application/json" -X PUT -d
       {"id": 13}
   ]' http://localhost:9000/users 
  ```
- No json body provided in the bulk DELETE request( a json must be provided for bulk delete, it can be {} to delete all users)
+ No json body provided in the bulk DELETE request( a json body must be provided for bulk delete, it can be {} to delete all users)
  ```
  curl -X DELETE  http://localhost:9000/users
  ```
@@ -157,5 +157,5 @@ curl -H "Content-Type: application/json" -X PUT -d
 
    To run the tests
    ```
-   sbt testAll
+   sbt test
    ```
