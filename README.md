@@ -6,8 +6,9 @@ but the images are not deleted.
 
 # To Run
 On the first run, the docker images are downloaded. These images are not deleted when the application exits. Remove docker images manually when needed.
-
-Make sure docker service is running
+Prerequisites:
+  a)  Make sure Java 8 is installed and is the active version
+  b)  Make sure docker service is running
 ```
 sbt run
 ```
@@ -19,7 +20,8 @@ UserController uses guice injected modules of userDB service to do single and bu
 
 These CRUD operations takes a single user_id url parameter to manipulate the corresponding user.
 
-## Add a single user
+## Add/Update(Upsert) a single user
+If a user already exists with the specied user_id an update is performed. Otherwise an insert is performed
 ```
 Use PUT method with json body of the format 
 {
@@ -36,31 +38,20 @@ curl -H "Content-Type: application/json" -X PUT -d '{"name":"First1 Last1","high
 ```
 curl -H "Content-Type: application/json" -X PUT -d '{"name":"First2 Last2","high_score": 100, "last_login":"2017-05-03T02:26:49Z"}' http://localhost:9000/users/user_id=2
 ```
+```
+curl -H "Content-Type: application/json" -X PUT -d '{"name":"UpdatedFirst1 Last1","high_score": 102, "last_login":"2017-05-01T02:26:49Z"}' http://localhost:9000/users/user_id=1
+```
 
 ## Retrieve a single user
 Example:
 ```
-curl -X GET http://localhost:9000/user_id=1
-```
-
-## Update a single user
-```
-Use PUT method with json body of the format
-{
-    "name" : "UpdateFirst Last",
-    "high_score" : 101,
-    "last_login" : "2017-05-02T15:26:49Z"
-}
-```
-Example:
-```
-curl -H "Content-Type: application/json" -X PUT -d '{"name":"UpdatedFirst1 Last1","high_score": 102, "last_login":"2017-05-01T02:26:49Z"}' http://localhost:9000/users/user_id=1
+curl -X GET http://localhost:9000/users/user_id=1
 ```
 
 ## Delete a single user
 Example:
 ```
-curl -X DELETE http://localhost:9000/user_id=1
+curl -X DELETE http://localhost:9000/users/user_id=1
 ```
 
 ## Bulk Operations
@@ -126,6 +117,38 @@ Use DELETE method with json body of the format
  Example:
  ```
     curl -H "Content-Type: application/json" -X DELETE -d '{}' http://localhost:9000/users
+ ```
+ 
+## A few error calls:
+Invalid json body in PUT request(high_score field not present)
+```
+  curl -H "Content-Type: application/json" -X PUT -d '{"name":"First1 Last1", "last_login":"2017-05-01T02:26:49Z"}' http://localhost:9000/users/user_id=1
+```
+Invalid json body in PUT request(highest_score is an invalid field)
+```
+curl -H "Content-Type: application/json" -X PUT -d '{"name":"First1 Last1","highest_score": 103, "last_login":"2017-05-01T02:26:49Z"}' http://localhost:9000/users/user_id=1
+```
+Invalid json body in bulk PUT request(id field absent for the second element of the json array)
+```
+curl -H "Content-Type: application/json" -X PUT -d
+ '[
+      {"id": 11, "user": { "name":"name11","high_score":101,"last_login":"2017-05-01T16:26:49-0700"}},
+      {"user": { "name":"name12","high_score":102,"last_login":"2017-05-02T16:26:49-0700"}},
+      {"id": 13, "user": { "name": "name13","high_score":106,"last_login":"2017-05-03T16:26:49-0700"}}
+  ]' http://localhost:9000/users 
+ ```
+ Invalid json body in bulk PUT request(user field absent for the third element of the json array)
+```
+curl -H "Content-Type: application/json" -X PUT -d
+ '[
+      {"id": 11, "user": { "name":"name11","high_score":101,"last_login":"2017-05-01T16:26:49-0700"}},
+      {"id": 12, "user": { "name":"name12","high_score":102,"last_login":"2017-05-02T16:26:49-0700"}},
+      {"id": 13}
+  ]' http://localhost:9000/users 
+ ```
+ No json body provided in the bulk DELETE request( a json must be provided for bulk delete, it can be {} to delete all users)
+ ```
+ curl -X DELETE  http://localhost:9000/users
  ```
 
 ## Tests
