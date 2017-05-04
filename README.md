@@ -6,7 +6,9 @@ but the images are not deleted.
 
 # To Run
 On the first run, the docker images are downloaded. These images are not deleted when the application exits. Remove docker images manually when needed.
+
 Prerequisites:
+
   a)  Make sure Java 8 is installed and is the active version
   b)  Make sure docker service is running
 ```
