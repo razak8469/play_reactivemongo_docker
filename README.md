@@ -33,7 +33,7 @@ UserController uses guice injected modules of userDB service to do single and bu
 These CRUD operations takes a single user_id url parameter to manipulate the corresponding user.
 
 ## Add/Update(Upsert) a single user
-If a user already exists with the specied user_id an update is performed. Otherwise an insert is performed
+If a user already exists with the specified user_id an update is performed. Otherwise an insert is performed
 ```
 Use PUT method with json body of the format 
 {
