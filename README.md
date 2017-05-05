@@ -5,7 +5,8 @@ and, installs and run a mongodb container instance in a ubuntu docker image. On 
 but the images are not deleted.
 
 # To Run
-On the first run, the docker images are downloaded. These images are not deleted when the application exits. Remove docker images manually when needed.
+On the first run, the docker images are downloaded (and cached) and so it takes a few minutes longer than the successive runs. The docker commands in the runtime hook 
+uses the cached images for the successive runs. These images are not deleted when the application exits. Remove docker images manually when needed.
 
 Prerequisites:
 
@@ -14,8 +15,14 @@ Prerequisites:
 ```
 sbt run
 ```
-On the first run, the docker images are downloaded and docker containers are run. This can take a few minutes. Please make sure the userdb_mongo_instance 
-container is running before the following operations.
+The play runtime hook has docker commands to build and run the mongodb container instance. These commands are run as seperate process from the application. The application 
+is ready to use when these commands finishes. These commands finishes with a message similar to the following(the build id and the instance id varies in different runs)
+
+```
+Successfully built 2da7980dd2b5
+3c8986f5338085222b416528b362eb06e0f9bfb991483e6155590946d9fc1035
+```
+Thwe application is now ready to be operated on.
 
 # Operations
 
