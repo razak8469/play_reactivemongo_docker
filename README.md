@@ -13,10 +13,12 @@ Prerequisites:
   a)  Make sure Java 8 is installed and is the active version
   b)  Make sure docker service is running
 ```
+git clone https://github.com/razak8469/play_reactivemongo_docker.git
+cd play_reactivemongo_docker
 sbt run
 ```
-The play runtime hook has docker commands to build and run the mongodb container instance. These commands are run as seperate process from the application. The application 
-is ready to use when these commands finishes. These commands finishes with a message similar to the following(the build id and the instance id varies in different runs)
+The play runtime hook has docker commands to build and run the mongodb container instance. These commands are run as seperate process parallely from the application. So the application 
+is ready to use when these commands finishes. These commands finishes with a message similar to the following(the build id and the instance id will be different and varies in different runs)
 
 ```
 Successfully built 2da7980dd2b5
