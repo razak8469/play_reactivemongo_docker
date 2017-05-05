@@ -115,12 +115,12 @@ Use DELETE method with json body of the format
   ```
      curl -H "Content-Type: application/json" -X DELETE -d '{"fromId": 13, "toId": 22}' http://localhost:9000/users
   ```
- b) Delete all users >= to a specied id: {"fromId": 22 }
+ b) Delete all users >= to a specified id: {"fromId": 22 }
  Example:
  ```
     curl -H "Content-Type: application/json" -X DELETE -d '{"fromId": 12}' http://localhost:9000/users
  ```
- c) Delete all users <= to a specied id: {"toId": 22 }
+ c) Delete all users <= to a specified id: {"toId": 22 }
  Example:
  ```
     curl -H "Content-Type: application/json" -X DELETE -d '{"toId": 22}' http://localhost:9000/users
