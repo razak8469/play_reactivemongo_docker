@@ -14,6 +14,9 @@ Prerequisites:
 ```
 sbt run
 ```
+On the first run, the docker images are downloaded and docker containers are run. This can take a few minutes. Please make sure the userdb_mongo_instance 
+container is running before the following operations.
+
 # Operations
 
 UserController uses guice injected modules of userDB service to do single and bulk CRUD operations as well as a clockService module to handle time.
