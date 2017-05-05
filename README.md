@@ -22,7 +22,7 @@ is ready to use when these commands finishes. These commands finishes with a mes
 Successfully built 2da7980dd2b5
 3c8986f5338085222b416528b362eb06e0f9bfb991483e6155590946d9fc1035
 ```
-Thwe application is now ready to be operated on.
+The application is now ready to be operated on.
 
 # Operations
 
